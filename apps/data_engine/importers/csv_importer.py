@@ -1,22 +1,31 @@
 import pandas as pd
-from pathlib import Path
+
+from apps.data_engine.mapping.column_mapper import ColumnMapper
+
+REQUIRED_COLUMNS = {"name", "email"}
 
 
 class CSVImporter:
-    REQUIRED_COLUMNS = {"name", "email", "course", "due_date"}
 
     @staticmethod
-    def load(file_path):
-        path = Path(file_path)
-
-        if not path.exists():
-            raise FileNotFoundError(f"{path} not found.")
-
+    def load(path):
         df = pd.read_csv(path)
 
-        df.columns = [col.strip().lower() for col in df.columns]
+        print("Original Columns:", df.columns.tolist())
+        
+        df = ColumnMapper.map_columns(df)
+        
+        print("Mapped Columns:", df.columns.tolist())
+        
+        df.columns = [
+            column.strip().lower()
+            for column in df.columns
+        ]
+        
+        print("Normalized Columns:", df.columns.tolist())
+        
+        missing = REQUIRED_COLUMNS - set(df.columns)
 
-        missing = CSVImporter.REQUIRED_COLUMNS - set(df.columns)
         if missing:
             raise ValueError(
                 f"Missing required columns: {', '.join(sorted(missing))}"
