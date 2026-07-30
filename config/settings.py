@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    "mailer",
-    "automation",
-    "dashboard",
-    "data_engine"
+    "apps.mailer",
+    "apps.automation",
+    "apps.dashboard",
+    "apps.data_engine"
 ]
 
 MIDDLEWARE = [
