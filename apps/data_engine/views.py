@@ -4,6 +4,7 @@ import tempfile
 from django.shortcuts import render
 
 from apps.data_engine.importers.csv_importer import CSVImporter
+from apps.data_engine.importers.excel_importer import ExcelImporter
 from apps.data_engine.services.recipient_service import RecipientService
 
 
@@ -27,7 +28,16 @@ def import_recipients(request):
 
             temp_path = temp_file.name
 
-        df = CSVImporter.load(temp_path)
+        suffix = Path(uploaded_file.name).suffix.lower()
+
+        if suffix == ".csv":
+            df = CSVImporter.load(temp_path)
+
+        elif suffix in [".xlsx", ".xls"]:
+            df = ExcelImporter.load(temp_path)
+
+        else:
+            raise ValueError("Unsupported file format.")
 
         created, skipped = RecipientService.save_dataframe(df)
 
