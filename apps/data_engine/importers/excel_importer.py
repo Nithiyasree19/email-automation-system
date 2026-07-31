@@ -2,7 +2,6 @@ import pandas as pd
 
 from apps.data_engine.mapping.column_mapper import ColumnMapper
 
-
 REQUIRED_COLUMNS = {"name", "email"}
 
 

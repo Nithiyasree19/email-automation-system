@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Email Templates{% endblock %}</title>
+</head>
+{% block content %}
+<body>
+
+<h1>Email Templates</h1>
+
+<p>
+    <a href="{% url 'template_create' %}">
+        + Create New Template
+    </a>
+</p>
+
+<table border="1" cellpadding="8">
+
+    <tr>
+        <th>Name</th>
+        <th>Subject</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for template in templates %}
+
+    <tr>
+
+        <td>{{ template.name }}</td>
+
+        <td>{{ template.subject }}</td>
+
+        <td>
+
+            <a href="{% url 'template_preview' template.id %}">
+                Preview
+            </a>
+
+            |
+
+            <a href="{% url 'template_edit' template.id %}">
+                Edit
+            </a>
+
+            |
+
+            <a href="{% url 'template_delete' template.id %}">
+                Delete
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+        <td colspan="3">
+            No templates created.
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+</body>
+{% endblock %}
+</html>

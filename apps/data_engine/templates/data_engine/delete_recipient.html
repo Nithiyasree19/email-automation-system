@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+Delete Recipient
+{% endblock %}
+
+{% block content %}
+
+<h2>Delete Recipient</h2>
+
+<div class="card">
+
+    <p>
+        Are you sure you want to delete this recipient?
+    </p>
+
+    <table>
+
+        <tr>
+            <th>Name</th>
+            <td>{{ recipient.name }}</td>
+        </tr>
+
+        <tr>
+            <th>Email</th>
+            <td>{{ recipient.email }}</td>
+        </tr>
+
+    </table>
+
+    <br>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="btn"
+            style="background:#dc2626;"
+        >
+            Delete
+        </button>
+
+        <a
+            href="{% url 'recipient_list' %}"
+            class="btn"
+        >
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

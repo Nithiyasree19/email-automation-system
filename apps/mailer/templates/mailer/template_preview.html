@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Template Preview{% endblock %}</title>
+</head>
+{% block content %}
+<body>
+
+<h1>{{ template.name }}</h1>
+
+{% if preview %}
+
+<h2>Subject</h2>
+
+<p>
+    {{ preview.subject }}
+</p>
+
+<h2>Body</h2>
+
+<pre>{{ preview.body }}</pre>
+
+{% else %}
+
+<p>
+    No recipient available for preview.
+</p>
+
+{% endif %}
+
+<p>
+
+    <a href="{% url 'template_list' %}">
+        Back
+    </a>
+
+</p>
+
+</body>
+{% endblock %}
+</html>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Send Result{% endblock %}</title>
+</head>
+{% block content %}
+<body>
+
+<h1>Email Campaign Completed</h1>
+
+<p>Successfully Sent: {{ success }}</p>
+
+<p>Failed: {{ failed }}</p>
+
+<a href="{% url 'send_email' %}">
+Send Another Campaign
+</a>
+
+</body>
+{% endblock %}
+</html>

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Email Template{% endblock %}</title>
+</head>
+{% block content %}
+<body>
+
+<h1>Email Template</h1>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">
+        Save Template
+    </button>
+
+</form>
+
+<p>
+
+    <a href="{% url 'template_list' %}">
+        Back
+    </a>
+
+</p>
+
+</body>
+{% endblock %}
+</html>

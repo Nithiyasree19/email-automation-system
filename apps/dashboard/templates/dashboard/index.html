@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Email Automation Dashboard</title>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            margin:40px;
+            background:#f4f6f9;
+        }
+
+        h1{
+            text-align:center;
+        }
+
+        .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+        }
+
+
+        .card {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,.1);
+        text-align: center;
+        transition: transform .2s;
+        }
+
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            font-size: 32px;
+            margin: 0;
+            color: #2563eb;
+        }
+
+        .card p {
+            margin-top: 10px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .card-link{
+            text-decoration:none;
+            color:inherit;
+        }
+        
+        .card-link .card{
+            cursor:pointer;
+        }
+        
+        .card-link:hover .card{
+            transform:translateY(-5px);
+            box-shadow:0 6px 15px rgba(0,0,0,.15);
+        }
+
+        table{
+
+            width:100%;
+
+            border-collapse:collapse;
+
+            margin-top:40px;
+
+        }
+
+        th,td{
+
+            border:1px solid #ddd;
+
+            padding:10px;
+
+            text-align:center;
+
+        }
+
+        th{
+
+            background:#0077cc;
+
+            color:white;
+
+        }
+
+        .nav{
+
+            margin-bottom:30px;
+
+        }
+
+        .nav a{
+
+            margin-right:20px;
+
+            text-decoration:none;
+
+            font-weight:bold;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="nav">
+
+<a  href="/">Dashboard</a>
+
+<a href="/data/import/">Import</a>
+
+<a href="/templates/">Templates</a>
+
+<a href="/templates/send/">Send Email</a>
+
+<a href="/schedule/">Schedule</a>
+
+<a href="/logs/">Logs</a>
+
+</div>
+
+<h1>Email Automation Dashboard</h1>
+
+<div class="cards">
+
+    <a href="{% url 'recipient_list' %}" class="card-link">
+        <div class="card">
+            <h2>{{ recipient_count }}</h2>
+            <p>Recipients</p>
+        </div>
+    </a>
+
+    <a href="{% url 'template_list' %}" class="card-link">
+        <div class="card">
+            <h2>{{ template_count }}</h2>
+            <p>Templates</p>
+        </div>
+    </a>
+
+    <a href="{% url 'schedule_campaign' %}" class="card-link">
+        <div class="card">
+            <h2>{{ scheduled_count }}</h2>
+            <p>Scheduled</p>
+        </div>
+    </a>
+
+    <a href="{% url 'email_logs' %}?status=SUCCESS" class="card-link">
+        <div class="card">
+            <h2>{{ sent_count }}</h2>
+            <p>Emails Sent</p>
+        </div>
+    </a>
+
+    <a href="{% url 'email_logs' %}?status=FAILED" class="card-link">
+        <div class="card">
+            <h2>{{ failed_count }}</h2>
+            <p>Failed</p>
+        </div>
+    </a>
+
+</div>
+
+
+<h2>Recent Email Logs</h2>
+
+<table>
+
+<tr>
+
+<th>Recipient</th>
+
+<th>Template</th>
+
+<th>Status</th>
+
+<th>Time</th>
+
+</tr>
+
+{% for log in recent_logs %}
+
+<tr>
+
+<td>{{ log.recipient_email }}</td>
+
+<td>{{ log.template.name }}</td>
+
+<td>{{ log.status }}</td>
+
+<td>{{ log.sent_at|date:"d M Y H:i" }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="4">
+
+No Email Logs Yet
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+
+</html>

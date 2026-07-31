@@ -1,8 +1,10 @@
+{% extends "base.html" %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Recipient Import</title>
+    <title>{% block title%}Recipient Import{% endblock %}</title>
 </head>
+{% block content %}
 <body>
 
 <h2>Import Recipients</h2>
@@ -31,4 +33,5 @@
 {% endif %}
 
 </body>
+{% endblock %}
 </html>

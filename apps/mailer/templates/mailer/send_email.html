@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Send Emails{% endblock %}</title>
+</head>
+{% block content %}
+<body>
+
+<h1>Send Email Campaign</h1>
+
+<p>
+Recipients Available:
+<strong>{{ recipient_count }}</strong>
+</p>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">
+        Send Emails
+    </button>
+
+</form>
+
+<p>
+<a href="{% url 'template_list' %}">
+Back to Templates
+</a>
+</p>
+
+</body>
+
+{% endblock %}
+</html>
+
+

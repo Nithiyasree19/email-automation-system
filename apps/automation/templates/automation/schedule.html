@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{%block title%}Schedule Campaign{%endblock%}</title>
+</head>
+{%block content%}
+<body>
+
+<h1>Schedule Email Campaign</h1>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <p>
+        Title<br>
+        <input
+            type="text"
+            name="title"
+            required>
+    </p>
+
+    <p>
+
+        Template<br>
+
+        <select name="template">
+
+            {% for template in templates %}
+
+            <option value="{{ template.id }}">
+                {{ template.name }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+    </p>
+
+    <p>
+
+        Date & Time<br>
+
+        <input
+            type="datetime-local"
+            name="scheduled_time"
+            required>
+
+    </p>
+
+    <button type="submit">
+
+        Schedule
+
+    </button>
+
+</form>
+
+<hr>
+
+<h2>Scheduled Campaigns</h2>
+
+<table border="1">
+
+<tr>
+
+<th>Title</th>
+
+<th>Template</th>
+
+<th>Time</th>
+
+<th>Status</th>
+
+</tr>
+
+{% for campaign in campaigns %}
+
+<tr>
+
+<td>{{ campaign.title }}</td>
+
+<td>{{ campaign.template }}</td>
+
+<td>{{ campaign.scheduled_time }}</td>
+
+<td>{{ campaign.status }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+{%endblock%}
+</html>

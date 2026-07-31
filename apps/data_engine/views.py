@@ -1,10 +1,11 @@
-from pathlib import Path
 import tempfile
+from pathlib import Path
 
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.data_engine.importers.csv_importer import CSVImporter
 from apps.data_engine.importers.excel_importer import ExcelImporter
+from apps.data_engine.models import Recipient
 from apps.data_engine.services.recipient_service import RecipientService
 
 
@@ -50,4 +51,40 @@ def import_recipients(request):
         request,
         "data_engine/import.html",
         context,
+    )
+
+
+
+def recipient_list(request):
+
+    recipients = Recipient.objects.all().order_by("name")
+
+    return render(
+        request,
+        "data_engine/recipients.html",
+        {
+            "recipients": recipients,
+        },
+    )
+
+
+def delete_recipient(request, pk):
+
+    recipient = get_object_or_404(
+        Recipient,
+        pk=pk,
+    )
+
+    if request.method == "POST":
+
+        recipient.delete()
+
+        return redirect("recipient_list")
+
+    return render(
+        request,
+        "data_engine/delete_recipient.html",
+        {
+            "recipient": recipient,
+        },
     )
